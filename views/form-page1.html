@@ -1,0 +1,11 @@
+{{define "result"}}
+
+<ul>
+  {{range .Form.Inputs}}
+  <!-- in server -->
+  <!-- each list ele/row will be noun/adj/verb from form -->
+  <li id="{{.Name}}">{{.Value}}</li>
+  {{end}}
+</form>
+
+{{end}}

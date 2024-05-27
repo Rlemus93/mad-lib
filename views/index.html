@@ -1,20 +1,175 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Multi-Page-Form</title>
-    <link rel="stylesheet" href="/static/css/style.css" />
-  </head>
-  <body>
-    <div
-      data-theme="dark"
-      class="min-h-screen flex items-center justify-center bg-gray-900 text-white"
+{{define "index"}} {{template "header" .}}
+
+
+<div
+  
+  class="min-h-screen flex items-center justify-center bg-gray-900 text-white"
+>
+  <div class="text-center">
+    <h1 class="text-4xl font-bold mb-4">Mad-Lib</h1>
+    <button
+      type="button"
+      class="btn btn-primary"
+      onclick="my_modal_1.showModal()"
     >
-      <div class="text-center">
-        <h1 class="text-4xl font-bold mb-4">Multi-Page-Form</h1>
-        <button class="btn btn-primary">Start</button>
+      Start
+    </button>
+  </div>
+
+  <!-- modal -->
+  <dialog id="my_modal_1" class="modal">
+    <div class="modal-box">
+      <h3 class="font-bold text-lg">Hello!</h3>
+      <p class="py-4">Press ESC key or click the button below to close</p>
+      <div class="modal-action">
+        <form hx-post="/submit" hx-target="" hx-swap="outerHTML">
+          
+          <div id="1" class="flex flex-row items-center mt-2 mb-2" data-pages>
+            <!-- change class of inputs so that the text is bold white and border is solid white -->
+            <input
+              id="noun1"
+              placeholder="noun1"
+              type="text"
+              name="noun1"
+              class="border-2 border-white text-white"
+            />
+            <input
+              id="noun2"
+              placeholder="noun2"
+              type="text"
+              name="noun2"
+              class="border-2 border-white text-white"
+            />
+            <input
+              id="noun3"
+              placeholder="noun3"
+              type="text"
+              name="noun3"
+              class="border-2 border-white text-white"
+            />
+            <input
+              id="noun4"
+              placeholder="noun4"
+              type="text"
+              name="noun4"
+              class="border-2 border-white text-white"
+            />
+          </div>
+          <div id="2" class="hidden flex flex-row items-center mt-2 mb-2" data-pages>
+            <!-- change class of inputs so that the text is bold white and border is solid white -->
+            <input
+              id="verb1"
+              placeholder="verb1"
+              type="text"
+              name="verb1"
+              class="border-2 border-white text-white"
+            />
+            <input
+              id="verb2"
+              placeholder="verb2"
+              type="text"
+              name="verb2"
+              class="border-2 border-white text-white"
+            />
+            <input
+              id="verb3"
+              placeholder="verb3"
+              type="text"
+              name="verb3"
+              class="border-2 border-white text-white"
+            />
+            <input
+              id="verb4"
+              placeholder="verb4"
+              type="text"
+              name="verb4"
+              class="border-2 border-white text-white"
+            />
+          </div>
+          <div id="3" class="hidden flex flex-row items-center mt-2 mb-2" data-pages>
+            <!-- change class of inputs so that the text is bold white and border is solid white -->
+            <input
+              id="adj1"
+              placeholder="adj1"
+              type="text"
+              name="adj1"
+              class="border-2 border-white text-white"
+            />
+            <input
+              id="adj2"
+              placeholder="adj2"
+              type="text"
+              name="adj2"
+              class="border-2 border-white text-white"
+            />
+            <input
+              id="adj3"
+              placeholder="adj3"
+              type="text"
+              name="adj3"
+              class="border-2 border-white text-white"
+            />
+            <input
+              id="adj4"
+              placeholder="adj4"
+              type="text"
+              name="adj4"
+              class="border-2 border-white text-white"
+            />
+          </div>
+
+          <button
+            type="button"
+            onclick="paginate(-1)"
+            class="text-white inline-flex items-center bg-gray-300 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Back
+          </button>
+          <button
+            type="button"
+            onclick="paginate(1)" 
+            class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Next
+        </form>
       </div>
     </div>
-  </body>
-</html>
+  </dialog>
+
+  <!-- change the content of the modal -->
+  <div></div>
+  {{template "footer" .}}
+
+  <script>
+
+  var page = 1;
+  var pages = document.querySelectorAll("[data-pages]");
+
+    function paginate(val) {
+      if (page == 1 && val == -1) {
+        //cant go back oob
+        return
+      }
+      if (page == 3 && val == 1) {
+        //cant go fwd oob
+        return
+      }
+      page += val;
+
+      pages.forEach((el) => {
+        if (el.id == page) {
+          if (el.classList.contains('hidden')) {
+            el.classList.remove('hidden');
+          }
+        } else {
+          if (!el.classList.contains('hidden')) {
+            el.classList.add('hidden');
+          }
+        }
+      });
+
+    }
+
+  </script>
+</div>
+{{end}}
